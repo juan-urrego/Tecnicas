@@ -1,0 +1,8 @@
+a.action-btn{
+    color: aliceblue;
+    margin: 0px 5px;
+
+}
+a.action-btn:hover{
+    cursor: pointer;
+}

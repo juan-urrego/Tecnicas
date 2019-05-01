@@ -1,0 +1,210 @@
+<div class="row">
+    <div class="container">
+
+
+        <div class="row">
+            <!-- fila hasta la columna 4 -->
+            <div class="col s4">
+
+                <!-- Lista de Aviones -->
+                <div class="row col s12">
+                    <div class="card-panel purple white-text">
+                        <h3>Lista de Aviones</h3>
+                        <table>
+                            <tr *ngFor="let avi of avionService.aviones">
+                                <td><a (click)="onInfo(avi)">{{avi.numero}}</a></td>
+                                <td>
+                                    <a class="action-btn" (click)="onEditAvion(avi)">
+                                        <i class="material-icons">edit</i>
+                                    </a>
+                                    <a class="action-btn" (click)="onDeleteAvion(avi._id,avionForm)">
+                                        <i class="material-icons">delete</i>
+                                    </a>
+                                </td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Aviones disponibles -->
+                <div class="row col s12">
+                    <div class="card-panel light-green accent-4">
+                        <h3>Aviones disponibles </h3>
+                        <table>
+                            <tr *ngFor="let avi of avionService.aviones">
+                                <td *ngIf="avi.role=='ACTIVE_ROLE'">{{avi.numero}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- aviones en vuelo -->
+                <div class="row col s12">
+                    <div class="card-panel red accent-4">
+                        <h3>Aviones en vuelo </h3>
+                        <table>
+                            <tr *ngFor="let avi of avionService.aviones">
+                                <td *ngIf="avi.role=='INACTIVE_ROLE'">{{avi.numero}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="col s12">
+                        <div class="card-panel blue accent-4">
+                            <h3>Rutas </h3>
+                            <table>
+                                <tr *ngFor="let rut of rutaService.rutas">
+                                    <td>{{rut.ciudad}}</td>
+                                    <td>
+                                        <a class="action-btn" (click)="onEditRuta(rut)">
+                                            <i class="material-icons">edit</i>
+                                        </a>
+                                        <a class="action-btn" (click)="onDeleteRuta(rut._id,rutaForm)">
+                                            <i class="material-icons">delete</i>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+
+            </div>
+
+
+            <!-- fila hasta la columna 8 y sumas hasta 12 -->
+            <div class="col s8">
+
+                <!-- tabla de listar informacion de aviones y sus pasajeros -->
+                <div class="row col s12">
+                    <div class="card-panel amber">
+                        <div class="col s6">
+                            <h3>Avion {{nombre}}</h3>
+                            <strong>Piloto: {{piloto}}</strong><br>
+                            <span>Ruta: {{ruta}}</span>
+                        </div>
+                        <div class="col s6 m3">
+                            <button class="btn waves-effect amber darken-3" name="action">Despegar
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+                        <div class="col s6 m3">
+
+                            <button class="btn waves-effect red" name="action">Regresar
+                                <i class="material-icons right">send</i>
+                            </button>
+                        </div>
+
+                        <div class="col s12 center align">
+                            <h5>Usuarios</h5>
+                        </div>
+                        <table class="striped">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Identificacion</th>
+                                    <th>Edad</th>
+                                    <th>Telefono</th>
+                                    <th>Carka Kg</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td>Alvin</td>
+                                    <td>Eclair</td>
+                                    <td>$0.87</td>
+                                    <td>$0.87</td>
+                                    <td>$0.87</td>
+                                </tr>
+                                <tr>
+                                    <td>Alan</td>
+                                    <td>Jellybean</td>
+                                    <td>$3.76</td>
+                                    <td>$3.76</td>
+                                    <td>$3.76</td>
+                                </tr>
+                                <tr>
+                                    <td>Jonathan</td>
+                                    <td>Lollipop</td>
+                                    <td>$7.00</td>
+                                    <td>$7.00</td>
+                                    <td>$7.00</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Formulario para registrar los aviones -->
+                <div class="row col s12">
+                    <div class="card-panel blue-grey lighten-4">
+                        <form #avionForm="ngForm" (ngSubmit)="onSubmitAvion(avionForm)">
+
+                            <!-- Titulo -->
+                            <div class="center-align">
+                                <h3>Registrar Avion</h3>
+                            </div>
+
+                            <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="avionService.selectedAvion._id">
+                            <input type="hidden" name="role" #_id="ngModel"
+                                [(ngModel)]="avionService.selectedAvion.role">
+
+                            <!-- numero -->
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <strong for="username">Numero de Avion: <label class="red-text">*</label></strong>
+                                    <input type="text" name="numero" #name="ngModel"
+                                        [(ngModel)]="avionService.selectedAvion.numero"
+                                        placeholder="Ingrese el numero clave del avion" required>
+                                </div>
+                            </div>
+
+                            <!-- pilot -->
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <strong>Piloto: <label class="red-text">*</label></strong>
+                                    <input type="text" name="piloto" #name="ngModel"
+                                        [(ngModel)]="avionService.selectedAvion.piloto"
+                                        placeholder="Ingrese el nombre del piloto" required>
+                                </div>
+                            </div>
+
+
+                            <!-- seleccionar rutas -->
+                            <div class="row">
+                                <div class="form-field col s12">
+                                    <strong for="username">Ruta: <label class="red-text">*</label></strong>
+                                    <div class="input-field col s12">
+                                        <select name="ruta" #name="ngModel"
+                                            [(ngModel)]="avionService.selectedAvion.ruta" required>
+                                            <option value="" disabled selected>Choose your option</option>
+                                            <option *ngFor="let rut of rutaService.rutas" [value]="rut._id">
+                                                {{rut.ciudad}}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <!-- boton para registrar y reset-->
+                            <div class="row">
+                                <div class="input-field">
+                                    <button class="btn btn-custom right" type="button"
+                                        (click)="resetFormAvion(avionForm)">Reiniciar</button>
+                                    <button class="btn btn-custom right" type="submit"
+                                        [disabled]="!avionForm.valid">Registrar</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>

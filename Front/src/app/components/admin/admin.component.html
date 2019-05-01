@@ -1,0 +1,200 @@
+<div class="row">
+    <div class="container">
+        <div class="row">
+<br>
+        <button class="btn waves-effect purple right" name="action" (click)="onLogout()">Log out
+            <i class="material-icons right">send</i>
+        </button>
+    </div>
+<!-- registro y read de aerolineas -->
+        <div class="row">
+            <!-- carta blanca de registro -->
+            <div class="col s12 m8">
+
+                <div class="card-panel blue-grey lighten-4">
+                    <!-- formulario -->
+                    <form #aerolineaForm="ngForm" (ngSubmit)="onSubmit(aerolineaForm)">
+                        <!-- titulo  -->
+                        <div class="center-align">
+                            <h3>Registrar Aerolinea</h3>
+                        </div>
+
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea._id">
+                        <input type="hidden" name="role" #_id="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea.role">
+                        <!-- <input type="hidden" name="rutas" #_id="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea.rutas">
+                        <input type="hidden" name="aviones" #_id="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea.ciudades"> -->
+                        
+                        <!-- nombre -->
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <strong for="username">Nombre de Aerolinea: <label class="red-text">*</label></strong>
+                                <input type="text" name="nombre" #name="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea.nombre" placeholder="Ingrese el nombre de la aerolinea" required>
+                        
+                            </div>
+                        </div>
+
+                        <!-- nit -->
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <strong>NIT: <label class="red-text">*</label></strong>
+                                <input type="text" name="id" #name="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea.id" placeholder="Ingrese el nit de la empresa" required> 
+                            </div>
+                        </div>
+
+                        <!-- password -->
+                        <div class="row">
+                            <div class="form-field col s12">
+                                <strong for="username">Contraseña: <label class="red-text">*</label></strong>
+                                <input type="password" name="password" #name="ngModel" [(ngModel)]="aerolineaService.selectedAerolinea.password" placeholder="Ingese la contraseña" required>
+                            </div>
+                        </div>
+                        
+                        <!-- boton submit y reset -->
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <button class="btn btn-custom right" type="button" (click)="resetForm(aerolineaForm)">Reiniciar</button>
+                                <button class="btn btn-custom right" type="submit" [disabled]="!aerolineaForm.valid">Registrar</button>
+                            </div>
+                        </div>
+
+                    </form>
+                    <!-- fin formulario -->
+                </div>
+                <!-- fin card -->
+            </div>
+
+            <!-- carta naranja de aerolineas en el aeropuerto -->
+            <div class="col s12 m4">
+                <div class="card-panel orange white-text">
+                    <h3>Lista de Aerolineas</h3>
+                    <table>
+                        <tr *ngFor="let aer of aerolineaService.aerolineas">
+                            <td>{{aer.nombre}}</td>
+                            <td>
+                                <a class="action-btn" (click)="onEdit(aer)">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a class="action-btn" (click)="onDelete(aer._id,aerolineaForm)">
+                                   <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rutas info -->
+        <div class="row">
+
+            <!-- Listar Rutas -->
+            <div class="col s12 m4">
+                <div class="card-panel blue accent-4">
+                    <h3>Rutas </h3>
+                    <table>
+                        <tr *ngFor="let rut of rutaService.rutas">
+                            <td>{{rut.ciudad}}</td>
+                            <td>
+                                <a class="action-btn" (click)="onEditRuta(rut)">
+                                    <i class="material-icons">edit</i>
+                                </a>
+                                <a class="action-btn" (click)="onDeleteRuta(rut._id,rutaForm)">
+                                    <i class="material-icons">delete</i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <!-- RegistroRutas -->
+            <div class="col s12 m8">
+                <div class="card-panel blue-grey lighten-4">
+                    <form #rutaForm="ngForm" (ngSubmit)="onSubmitRuta(rutaForm)">
+                        <div class="center-align">
+                            <h3>Registrar Rutas</h3>
+                        </div>
+
+                        <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="rutaService.selectedRuta._id">
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <strong for="username">Nombre de la ciudad: <label
+                                        class="red-text">*</label></strong>
+                                <input type="text" name="ciudad" #name="ngModel"
+                                    [(ngModel)]="rutaService.selectedRuta.ciudad" placeholder="Ingrese la ruta"
+                                    required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field">
+                                <button class="btn-large waves-effect waves-dark" style="width: 100%" type="submit"
+                                    [disabled]="!rutaForm.valid">Registrar</button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+<!-- info por cada aerolinea -->
+        <div class="row" *ngFor="let aer of aerolineaService.aerolineas">
+            <h2>{{aer.nombre}}</h2>
+            <!-- listar aviones disponible -->
+            <div class="col s12 m4">
+                <div class="card-panel blue">
+                    <h3>Aviones disponibles </h3>
+                    <table>
+                            <tr>
+                                <td>a001</td>
+                            </tr>
+                            <tr>
+                                <td>a0002</td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+            <!-- litar aviones en vuelo -->
+            <div class="col s12 m4">
+                <div class="card-panel green">
+                    <h3>Aviones en vuelo </h3>
+                    <table>
+                            <tr>
+                                <td>a001</td>
+                            </tr>
+                            <tr>
+                                <td>a0002</td>
+                            </tr>
+                            <tr>
+                                <td>a0002</td>
+                            </tr>
+                        </table>
+                </div>
+            </div>
+            <!-- infor de liquidaciones -->
+            <div class="col s12 m4">
+                <div class="card-panel grey">
+                    <h2>Info</h2>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Liquidacion</th>
+                                <th>Liquidacion por carga</th>
+                            </tr>
+                        </thead>
+                
+                        <tbody>
+                            <tr>
+                                <td>Alvin</td>
+                                <td>Eclair</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,98 @@
+<div class="row">
+    <div class="col s12">
+      <div class="card">
+        <div class="card-content white-text">
+          <div class="row">
+            <div class="col s5">
+
+              <!-- formulario -->
+              <form #employeeForm="ngForm" (ngSubmit)="onSubmit(employeeForm)">
+                <!-- obtener el _id de mongo -->
+                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="employeeService.selectedEmployee._id">
+
+                <!-- nombre -->
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input type="text" name="name" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.name" placeholder="Enter full name" required>
+                    <label>Name :
+                      <label class="red-text">*</label>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- position -->
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input type="text" name="position" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.position" placeholder="Enter position">
+                    <label>Position :
+                      <label class="red-text">*</label>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- office -->
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input type="text" name="office" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.office" placeholder="Enter office">
+                    <label>Office :
+                      <label class="red-text">*</label>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- salary -->
+                <div class="row">
+                  <div class="input-field col s12">
+                    <input type="text" name="salary" #name="ngModel" [(ngModel)]="employeeService.selectedEmployee.salary" placeholder="Enter full salary">
+                    <label>Salary :
+                      <label class="red-text">*</label>
+                    </label>
+                  </div>
+                </div>
+
+                <!-- botones de submit y resest -->
+                <div class="row">
+                  <div class="input-field col s12 hoverable">
+                    <button class="btn btn-custom right" type="button" (click)="resetForm(employeeForm)">Reset</button>
+                    <button class="btn btn-custom right" type="submit" [disabled]="!employeeForm.valid">Submit</button>
+                  </div>
+                </div>
+
+              </form>
+              <!-- fin formulario -->
+            </div>
+
+
+            <div class="col s7">
+
+              <!-- tabla de listar, editar , borrar -->
+              <table class="responsive-table highlight">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Office</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tr *ngFor="let emp of employeeService.employees"> 
+                  <td>{{emp.name}}</td>
+                  <td>{{emp.position}}</td>
+                  <td>{{emp.office}}</td>
+                  <td>
+                    <a class="action-btn" (click)="onEdit(emp)">
+                      <i class="material-icons">edit</i>
+                    </a>
+                    <a class="action-btn" (click)="onDelete(emp._id,employeeForm)">
+                      <i class="material-icons">delete</i>
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </div>
+  
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
